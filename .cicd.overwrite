@@ -1,0 +1,14 @@
+---
+
+# Generic
+generic:
+  role: ansible-role-kickstart
+  role_short: kickstart
+  role_description: |
+    Create kickstart file for automatic installation of RedHat and derivatives
+    Kickstart file can be plain or within an image like iso or floppy
+  collections: []
+
+molecule:
+  requirements:
+    roles_extra: []

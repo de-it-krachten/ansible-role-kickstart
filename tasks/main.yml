@@ -1,0 +1,20 @@
+---
+
+- name: Assertions
+  ansible.builtin.assert:
+    that:
+      - kickstart_distro is defined
+      - kickstart_version is defined
+      - kickstart_vm is defined
+
+- name:
+  ansible.builtin.set_fact:
+    kickstart_distro1: "{{ kickstart_distro | lower }}{{ kickstart_version }}"
+
+- name: Include tasks from prepare.yml
+  ansible.builtin.include_tasks:
+    file: prepare.yml
+
+- name: Include tasks from {{ kickstart_mode }}.yml
+  ansible.builtin.include_tasks:
+    file: "{{ kickstart_mode }}.yml"

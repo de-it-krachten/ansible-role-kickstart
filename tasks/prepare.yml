@@ -1,0 +1,14 @@
+---
+
+- name: Install OS packages
+  ansible.builtin.package:
+    name: "{{ kickstart_os_packages[ansible_os_family] }}"
+    state: present
+  become: yes
+
+- name: Install pypi packages
+  ansible.builtin.pip:
+    name: "{{ kickstart_pip_packages }}"
+    state: present
+  become: yes
+

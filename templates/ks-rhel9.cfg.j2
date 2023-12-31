@@ -1,0 +1,99 @@
+#version=RHEL9
+ignoredisk --only-use=sda
+
+# Partition clearing information
+clearpart --none --initlabel
+
+# Install OS instead of upgrade
+#install
+
+# Use installation media
+# Note : activating break kickstart netboot !!!
+#cdrom 
+
+# Use text install
+text
+
+# Keyboard layouts
+keyboard --vckeymap=us --xlayouts='us'
+
+# System language
+lang {{ kickstart_lang }}
+
+# Network information
+{% if kickstart_network.bootproto == 'dhcp' %}
+network --bootproto={{ kickstart_network.bootproto }} --device={{ kickstart_network.device }} --ipv6=auto --activate
+{% else %}
+network --bootproto={{ kickstart_network.bootproto }} --device={{ kickstart_network.device }} --gateway={{ kickstart_network.gateway }} --ip={{ kickstart_network.ip }} --nameserver={{ kickstart_network.dns1 }} --netmask={{ kickstart_network.netmask }} --ipv6=auto --activate
+{% endif %}
+network --hostname={{ kickstart_network.hostname }}
+
+# Firewall configuration
+firewall --enabled --ssh
+
+# Root password
+rootpw --iscrypted --allow-ssh {{ kickstart_users.root_password | string | password_hash('sha512') }} 
+
+# Run the Setup Agent on first boot
+#firstboot --enable
+firstboot --disable
+
+# Do not configure the X Window System
+skipx
+
+# System services
+services --disabled="chronyd"
+
+# System timezone
+timezone {{ kickstart_timezone }} --utc
+
+# Installation logging level
+logging
+
+# users
+user --name={{ kickstart_users.ansible_user }} --password={{ kickstart_users.ansible_password | string | password_hash('sha512') }} --iscrypted
+
+# Partition clearing information
+zerombr
+clearpart --all --initlabel
+
+# Disk partitioning information
+part /boot --asprimary --fstype=xfs --ondisk=sda --size=1024
+part pv.01 --ondisk=sda --size=1 --grow
+
+# LVM information
+volgroup {{ kickstart_lvm.vg }} pv.01 --pesize={{ kickstart_lvm.pe_size }}
+{% for lv in kickstart_lvm.lv %}
+logvol {{ lv.mp }} --vgname={{ kickstart_lvm.vg }} --size={{ lv.size * 1024 }} --name={{ lv.name }} --fstype={{ lv.fstype }}
+{% endfor %}
+
+# Reboot when finished
+{{ kickstart_final_action }}
+
+# Repositories
+url --url={{ kickstart_sources[kickstart_distro1]['baseos'] }}
+repo --name="AppStream" --baseurl={{ kickstart_sources[kickstart_distro1]['appstream'] }}
+
+# Packages
+%packages
+@^minimal-environment
+python3
+policycoreutils-python-utils
+%end
+
+%addon com_redhat_kdump --disable --reserve-mb='auto'
+
+%end
+
+%anaconda
+pwpolicy root --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+pwpolicy user --minlen=6 --minquality=1 --notstrict --nochanges --emptyok
+pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+%end
+
+%post
+/usr/sbin/alternatives --set python /usr/bin/python3
+echo '{{ kickstart_users.ansible_user }} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/{{ kickstart_users.ansible_user }}
+chmod 440 /target/etc/sudoers.d/{{ kickstart_users.ansible_user }}
+
+%end

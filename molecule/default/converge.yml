@@ -1,0 +1,9 @@
+---
+
+- name: Converge
+  hosts: all
+  become: "yes"
+  tasks:
+    - name: Include role 'ansible-role-kickstart'
+      ansible.builtin.include_role:
+        name: ansible-role-kickstart

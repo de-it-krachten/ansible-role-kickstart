@@ -1,0 +1,13 @@
+---
+
+- name: Create kickstart file from template
+  ansible.builtin.template:
+    src: "{{ kickstart_template }}"
+    dest: "{{ kickstart_file }}"
+    mode: "0644"
+
+- name: Test the kickstart file for consistency  # noqa 301
+  ansible.builtin.command:
+    cmd: ksvalidator -v {{ kickstart_template_version }} {{ kickstart_file }}
+  changed_when: false
+  when: kickstart_validator | bool
