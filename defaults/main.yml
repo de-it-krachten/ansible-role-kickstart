@@ -1,5 +1,8 @@
 ---
 
+# Prepare host for kickstart
+kickstart_prepare: true
+
 # Validate kickstart file using validator
 kickstart_validator: true
 
@@ -18,9 +21,10 @@ kickstart_os_packages:
 # List of pip/pypi packages for creating & validating kickstart files/images
 kickstart_pip_packages:
   - pykickstart
+  - passlib
 
 # Name of the VM
-kickstart_vm: localhost
+kickstart_hostname: localhost
 
 # Kickstart template to use
 kickstart_template: ks-rhel{{ kickstart_version }}.cfg.j2
@@ -62,7 +66,7 @@ kickstart_users:
 
 # Network settings
 kickstart_network:
-  hostname: "{{ kickstart_vm }}"
+  hostname: "{{ kickstart_hostname }}"
   bootproto: dhcp
   device: enp0s3
   # bootproto: static
@@ -76,13 +80,13 @@ kickstart_lvm:
   vg: rootvg
   pe_size: 32768
   lv:
-    - { name: lv_root,     size: 8, mp: /,          fstype: xfs }
-    - { name: lv_home,     size: 1, mp: /home,      fstype: xfs }
-    - { name: lv_tmp,      size: 2, mp: /tmp,       fstype: xfs }
+    - { name: lv_root, size: 8, mp: /, fstype: xfs }
+    - { name: lv_home, size: 1, mp: /home, fstype: xfs }
+    - { name: lv_tmp, size: 2, mp: /tmp, fstype: xfs }
     - { name: lv_usrlocal, size: 1, mp: /usr/local, fstype: xfs }
-    - { name: lv_var,      size: 2, mp: /var,       fstype: xfs }
-    - { name: lv_varlog,   size: 1, mp: /var/log,   fstype: xfs }
-    - { name: lv_swap,     size: 2, mp: swap,       fstype: swap }
+    - { name: lv_var, size: 2, mp: /var, fstype: xfs }
+    - { name: lv_varlog, size: 1, mp: /var/log, fstype: xfs }
+    - { name: lv_swap, size: 2, mp: swap, fstype: swap }
 
 # Final action after installation
 # kickstart_final_action: "reboot --eject"

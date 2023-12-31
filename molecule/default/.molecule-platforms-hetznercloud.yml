@@ -1,7 +1,7 @@
 ---
 
 - name: centos7
-  ci: true
+  ci: false
   server_type: cx11
   image: centos-7
 - name: centos8s

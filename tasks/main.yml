@@ -5,16 +5,17 @@
     that:
       - kickstart_distro is defined
       - kickstart_version is defined
-      - kickstart_vm is defined
+      - kickstart_hostname is defined
 
-- name:
+- name: Set some variables for simplicity
   ansible.builtin.set_fact:
     kickstart_distro1: "{{ kickstart_distro | lower }}{{ kickstart_version }}"
 
 - name: Include tasks from prepare.yml
   ansible.builtin.include_tasks:
     file: prepare.yml
+  when: kickstart_prepare | bool
 
-- name: Include tasks from {{ kickstart_mode }}.yml
+- name: Include tasks from {{ kickstart_mode }}.yml  # noqa name[template]
   ansible.builtin.include_tasks:
     file: "{{ kickstart_mode }}.yml"

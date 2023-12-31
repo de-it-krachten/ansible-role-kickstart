@@ -9,6 +9,52 @@ generic:
     Kickstart file can be plain or within an image like iso or floppy
   collections: []
 
+# Supported platforms
+platforms:
+  rhel7:
+    ci: false
+    supported: false
+  centos7:
+    ci: false
+    supported: false
+  centos8s:
+    ci: false
+    supported: false
+  centos9s:
+    ci: false
+    supported: false
+  opensuse15:
+    ci: false
+    supported: false
+  alpine3:
+    ci: false
+    supported: false
+
+# Molecule
 molecule:
   requirements:
     roles_extra: []
+  prepare:
+    vars:
+      activate_epel: true
+      install_python: true
+      python38: false
+      python39: true
+      python311: true
+  converge:
+    vars:
+      kickstart_distros:
+        - { name: Rocky, version: 8, mode: iso }
+        - { name: Rocky, version: 9, mode: iso }
+        - { name: OracleLinux, version: 8, mode: iso }
+        - { name: OracleLinux, version: 9, mode: iso }
+        - { name: Rocky, version: 8, mode: fdd }
+        - { name: Rocky, version: 9, mode: fdd }
+        - { name: OracleLinux, version: 8, mode: fdd }
+        - { name: OracleLinux, version: 9, mode: fdd }
+
+# CI templates
+ci_templates:
+  converge.yml:
+    force: false
+

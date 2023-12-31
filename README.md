@@ -20,10 +20,8 @@ None
 
 Supported platforms
 
-- Red Hat Enterprise Linux 7<sup>1</sup>
 - Red Hat Enterprise Linux 8<sup>1</sup>
 - Red Hat Enterprise Linux 9<sup>1</sup>
-- CentOS 7
 - RockyLinux 8
 - RockyLinux 9
 - OracleLinux 8
@@ -31,7 +29,6 @@ Supported platforms
 - AlmaLinux 8
 - AlmaLinux 9
 - SUSE Linux Enterprise 15<sup>1</sup>
-- openSUSE Leap 15
 - Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
 - Ubuntu 20.04 LTS
@@ -45,6 +42,9 @@ Note:
 ## Role Variables
 ### defaults/main.yml
 <pre><code>
+# Prepare host for kickstart
+kickstart_prepare: true
+
 # Validate kickstart file using validator
 kickstart_validator: true
 
@@ -121,13 +121,13 @@ kickstart_lvm:
   vg: rootvg
   pe_size: 32768
   lv:
-    - { name: lv_root,     size: 8, mp: /,          fstype: xfs }
-    - { name: lv_home,     size: 1, mp: /home,      fstype: xfs }
-    - { name: lv_tmp,      size: 2, mp: /tmp,       fstype: xfs }
+    - { name: lv_root, size: 8, mp: /, fstype: xfs }
+    - { name: lv_home, size: 1, mp: /home, fstype: xfs }
+    - { name: lv_tmp, size: 2, mp: /tmp, fstype: xfs }
     - { name: lv_usrlocal, size: 1, mp: /usr/local, fstype: xfs }
-    - { name: lv_var,      size: 2, mp: /var,       fstype: xfs }
-    - { name: lv_varlog,   size: 1, mp: /var/log,   fstype: xfs }
-    - { name: lv_swap,     size: 2, mp: swap,       fstype: swap }
+    - { name: lv_var, size: 2, mp: /var, fstype: xfs }
+    - { name: lv_varlog, size: 1, mp: /var/log, fstype: xfs }
+    - { name: lv_swap, size: 2, mp: swap, fstype: swap }
 
 # Final action after installation
 # kickstart_final_action: "reboot --eject"
@@ -143,8 +143,39 @@ kickstart_final_action: "poweroff"
 - name: sample playbook for role 'kickstart'
   hosts: all
   become: 'yes'
+  vars:
+    kickstart_distros:
+      - name: Rocky
+        version: 8
+        mode: iso
+      - name: Rocky
+        version: 9
+        mode: iso
+      - name: OracleLinux
+        version: 8
+        mode: iso
+      - name: OracleLinux
+        version: 9
+        mode: iso
+      - name: Rocky
+        version: 8
+        mode: fdd
+      - name: Rocky
+        version: 9
+        mode: fdd
+      - name: OracleLinux
+        version: 8
+        mode: fdd
+      - name: OracleLinux
+        version: 9
+        mode: fdd
   tasks:
     - name: Include role 'kickstart'
       ansible.builtin.include_role:
         name: kickstart
+      vars:
+        kickstart_distro: '{{ item.name }}'
+        kickstart_version: '{{ item.version }}'
+        kickstart_mode: '{{ item.mode }}'
+      loop: '{{ kickstart_distros }}'
 </pre></code>

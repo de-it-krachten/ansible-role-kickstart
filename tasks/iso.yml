@@ -7,8 +7,8 @@
 
 - name: Define some variables for readability
   ansible.builtin.set_fact:
-    image: /tmp/{{ kickstart_vm }}-ks.iso
-    mountpoint: /tmp/{{ kickstart_vm }}
+    image: /tmp/{{ kickstart_hostname }}-ks.iso
+    mountpoint: /tmp/{{ kickstart_hostname }}
 
 - name: Delete the image if it is already present
   ansible.builtin.file:
@@ -33,6 +33,8 @@
 - name: Test the kickstart file for consistency
   ansible.builtin.command:
     cmd: ksvalidator -v {{ kickstart_template_version }} {{ mountpoint }}/ks.cfg
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
   changed_when: false
   when: kickstart_validator | bool
 
