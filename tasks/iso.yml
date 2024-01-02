@@ -54,3 +54,4 @@
     src: "{{ image }}"
     dest: "{{ kickstart_path }}/{{ kickstart_hostname }}-ks.iso"
     remote_src: yes
+  become: yes
