@@ -48,3 +48,7 @@
     path: "{{ mountpoint }}"
     state: absent
   changed_when: false
+
+- name: Save result
+  ansible.builtin.set_fact:
+    kickstart_path: "{{ image }}"
