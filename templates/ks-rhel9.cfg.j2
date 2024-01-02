@@ -58,6 +58,9 @@ zerombr
 clearpart --all --initlabel
 
 # Disk partitioning information
+{% if kickstart_bios_mode == 'uefi' %}
+part /boot/efi --fstype=efi --size=250
+{% endif %}
 part /boot --asprimary --fstype=xfs --ondisk=sda --size=1024
 part pv.01 --ondisk=sda --size=1 --grow
 
