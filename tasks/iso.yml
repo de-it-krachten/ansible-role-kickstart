@@ -49,6 +49,8 @@
     state: absent
   changed_when: false
 
-- name: Save result
-  ansible.builtin.set_fact:
-    kickstart_path: "{{ image }}"
+- name: Copy final file
+  ansible.builtin.copy:
+    src: "{{ image }}"
+    dest: "{{ kickstart_path }}/{{ kickstart_hostname }}-ks.iso"
+    remote_src: yes
