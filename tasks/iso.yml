@@ -48,3 +48,11 @@
     path: "{{ mountpoint }}"
     state: absent
   changed_when: false
+
+- name: Copy final file
+  ansible.builtin.copy:
+    src: "{{ image }}"
+    dest: "{{ kickstart_path }}/{{ kickstart_hostname }}-ks.iso"
+    remote_src: yes
+    mode: "0644"
+  become: yes

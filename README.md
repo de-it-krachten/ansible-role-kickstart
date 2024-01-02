@@ -51,6 +51,11 @@ kickstart_validator: true
 # Format for kickstart file (iso, file, fdd/floppy)
 kickstart_mode: iso
 
+kickstart_bios_mode: uefi
+
+# Define where to write kickstart image to
+kickstart_path: /tmp
+
 # List of OS packages for creating & validating kickstart files/images
 kickstart_os_packages:
   RedHat:
@@ -63,9 +68,10 @@ kickstart_os_packages:
 # List of pip/pypi packages for creating & validating kickstart files/images
 kickstart_pip_packages:
   - pykickstart
+  - passlib
 
 # Name of the VM
-kickstart_vm: localhost
+kickstart_hostname: localhost
 
 # Kickstart template to use
 kickstart_template: ks-rhel{{ kickstart_version }}.cfg.j2
@@ -107,7 +113,7 @@ kickstart_users:
 
 # Network settings
 kickstart_network:
-  hostname: "{{ kickstart_vm }}"
+  hostname: "{{ kickstart_hostname }}"
   bootproto: dhcp
   device: enp0s3
   # bootproto: static

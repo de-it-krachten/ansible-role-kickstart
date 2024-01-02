@@ -9,6 +9,11 @@ kickstart_validator: true
 # Format for kickstart file (iso, file, fdd/floppy)
 kickstart_mode: iso
 
+kickstart_bios_mode: uefi
+
+# Define where to write kickstart image to
+kickstart_path: /tmp
+
 # List of OS packages for creating & validating kickstart files/images
 kickstart_os_packages:
   RedHat:
