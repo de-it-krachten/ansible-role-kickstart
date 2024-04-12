@@ -1,47 +1,5 @@
-[![CI](https://github.com/de-it-krachten/ansible-role-kickstart/workflows/CI/badge.svg?event=push)](https://github.com/de-it-krachten/ansible-role-kickstart/actions?query=workflow%3ACI)
+---
 
-
-# ansible-role-kickstart
-
-Create kickstart file for automatic installation of RedHat and derivatives
-Kickstart file can be plain or within an image like iso or floppy
-
-
-
-## Dependencies
-
-#### Roles
-None
-
-#### Collections
-None
-
-## Platforms
-
-Supported platforms
-
-- Red Hat Enterprise Linux 8<sup>1</sup>
-- Red Hat Enterprise Linux 9<sup>1</sup>
-- RockyLinux 8
-- RockyLinux 9
-- OracleLinux 8
-- OracleLinux 9
-- AlmaLinux 8
-- AlmaLinux 9
-- SUSE Linux Enterprise 15<sup>1</sup>
-- Debian 11 (Bullseye)
-- Debian 12 (Bookworm)
-- Ubuntu 20.04 LTS
-- Ubuntu 22.04 LTS
-- Fedora 37
-- Fedora 38
-
-Note:
-<sup>1</sup> : no automated testing is performed on these platforms
-
-## Role Variables
-### defaults/main.yml
-<pre><code>
 # Prepare host for kickstart
 kickstart_prepare: true
 
@@ -138,50 +96,3 @@ kickstart_lvm:
 # Final action after installation
 # kickstart_final_action: "reboot --eject"
 kickstart_final_action: "poweroff"
-</pre></code>
-
-
-
-
-## Example Playbook
-### molecule/default/converge.yml
-<pre><code>
-- name: sample playbook for role 'kickstart'
-  hosts: all
-  become: 'yes'
-  vars:
-    kickstart_distros:
-      - name: Rocky
-        version: 8
-        mode: iso
-      - name: Rocky
-        version: 9
-        mode: iso
-      - name: OracleLinux
-        version: 8
-        mode: iso
-      - name: OracleLinux
-        version: 9
-        mode: iso
-      - name: Rocky
-        version: 8
-        mode: fdd
-      - name: Rocky
-        version: 9
-        mode: fdd
-      - name: OracleLinux
-        version: 8
-        mode: fdd
-      - name: OracleLinux
-        version: 9
-        mode: fdd
-  tasks:
-    - name: Include role 'kickstart'
-      ansible.builtin.include_role:
-        name: kickstart
-      vars:
-        kickstart_distro: '{{ item.name }}'
-        kickstart_version: '{{ item.version }}'
-        kickstart_mode: '{{ item.mode }}'
-      loop: '{{ kickstart_distros }}'
-</pre></code>

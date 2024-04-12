@@ -1,0 +1,58 @@
+---
+
+- name: Make sure all variables are set
+  ansible.builtin.assert:
+    that:
+      - kickstart_template is defined
+
+- name: Define some variables for readability
+  ansible.builtin.set_fact:
+    image: /tmp/{{ kickstart_hostname }}-ks.iso
+    mountpoint: /tmp/{{ kickstart_hostname }}
+
+- name: Delete the image if it is already present
+  ansible.builtin.file:
+    path: "{{ image }}"
+    state: absent
+  changed_when: false
+
+- name: Create ISO directory
+  ansible.builtin.file:
+    path: "{{ mountpoint }}"
+    state: directory
+    mode: "0755"
+  changed_when: false
+
+- name: Create kickstart file from template
+  ansible.builtin.template:
+    src: "{{ kickstart_template }}"
+    dest: "{{ mountpoint }}/ks.cfg"
+    mode: "0644"
+  changed_when: false
+
+- name: Test the kickstart file for consistency
+  ansible.builtin.command:
+    cmd: ksvalidator -v {{ kickstart_template_version }} {{ mountpoint }}/ks.cfg
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  changed_when: false
+  when: kickstart_validator | bool
+
+- name: Create ISO image {{ image }}
+  ansible.builtin.command:
+    cmd: mkisofs -V OEMDRV -o {{ image }} {{ mountpoint }}
+  changed_when: false
+
+- name: Delete input directory
+  ansible.builtin.file:
+    path: "{{ mountpoint }}"
+    state: absent
+  changed_when: false
+
+- name: Copy final file
+  ansible.builtin.copy:
+    src: "{{ image }}"
+    dest: "{{ kickstart_path }}/{{ kickstart_hostname }}-ks.iso"
+    remote_src: yes
+    mode: "0644"
+  become: yes
