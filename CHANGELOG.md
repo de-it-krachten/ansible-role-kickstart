@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/de-it-krachten/ansible-role-kickstart/compare/v1.0.0...v1.1.0) (2024-06-03)
+
+
+### Features
+
+* Add support for Ubuntu 24.04 LTS + Fedora 40 ([fd63534](https://github.com/de-it-krachten/ansible-role-kickstart/commit/fd63534813d3dfdfafb86339420411e4d4ac781b))
+
 # 1.0.0 (2024-04-12)
 
 
