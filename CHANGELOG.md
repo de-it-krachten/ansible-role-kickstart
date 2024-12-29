@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/de-it-krachten/ansible-role-kickstart/compare/v1.1.0...v1.2.0) (2024-12-29)
+
+
+### Features
+
+* Update supported platforms & CI ([6575450](https://github.com/de-it-krachten/ansible-role-kickstart/commit/657545097d02c07d93e09548fbac3c0c1bbcc285))
+
 # [1.1.0](https://github.com/de-it-krachten/ansible-role-kickstart/compare/v1.0.0...v1.1.0) (2024-06-03)
 
 
