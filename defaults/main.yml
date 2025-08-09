@@ -14,6 +14,9 @@ kickstart_bios_mode: uefi
 # Define where to write kickstart image to
 kickstart_path: /tmp
 
+# kickstart virtualenv
+kickstart_venv_root: /usr/local/venv/pykickstart
+
 # List of OS packages for creating & validating kickstart files/images
 kickstart_os_packages:
   RedHat:

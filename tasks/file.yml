@@ -8,7 +8,7 @@
 
 - name: Test the kickstart file for consistency
   ansible.builtin.command:
-    cmd: ksvalidator -v {{ kickstart_template_version }} {{ kickstart_file }}
+    cmd: "{{ kickstart_venv_root }}/bin/ksvalidator -v {{ kickstart_template_version }} {{ kickstart_file }}"
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
   changed_when: false
