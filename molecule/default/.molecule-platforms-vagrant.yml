@@ -85,7 +85,7 @@
   box: generic/ubuntu1804
   interfaces: [{'network_name': 'private_network', 'type': 'dhcp', 'auto_config': True}]
 - name: ubuntu2004
-  ci: true
+  ci: false
   box: generic/ubuntu2004
   interfaces: [{'network_name': 'private_network', 'type': 'dhcp', 'auto_config': True}]
 - name: ubuntu2204

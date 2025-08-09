@@ -226,14 +226,6 @@ jobs:
             ansible_lint: "ansible-lint"
             hetznercloud: True
 
-          - name: ubuntu2004
-            runs_on: ubuntu-22.04
-            distro: ubuntu2004
-            playbook: converge.yml
-            ansible: "ansible-core>2.18,<2.19"
-            ansible_lint: "ansible-lint"
-            hetznercloud: True
-
           - name: ubuntu2204
             runs_on: ubuntu-22.04
             distro: ubuntu2204
