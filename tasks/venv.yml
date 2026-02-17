@@ -6,6 +6,7 @@
     virtualenv: "{{ venv_root }}"
     virtualenv_command: "python3 -m venv"
     extra_args: --upgrade
+  become: "{{ kickstart_venv_become | bool }}"
   vars:
     venv_base_packages:
       - pip
@@ -16,3 +17,4 @@
   ansible.builtin.pip:
     name: "{{ venv_packages }}"
     virtualenv: "{{ venv_root }}"
+  become: "{{ kickstart_venv_become | bool }}"

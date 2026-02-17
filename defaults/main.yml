@@ -17,6 +17,9 @@ kickstart_path: /tmp
 # kickstart virtualenv
 kickstart_venv_root: /usr/local/venv/pykickstart
 
+# setup venv as root
+kickstart_venv_become: true
+
 # List of OS packages for creating & validating kickstart files/images
 kickstart_os_packages:
   RedHat:
@@ -40,6 +43,7 @@ kickstart_template_version: RHEL{{ kickstart_version }}
 
 # Lookup dict for sources
 kickstart_sources:
+  # 'rhel9': {}
   'centos8':
     baseos: https://vault.centos.org/centos/8/BaseOS/x86_64/os
     appstream: https://vault.centos.org/centos/8/AppStream/x86_64/os
