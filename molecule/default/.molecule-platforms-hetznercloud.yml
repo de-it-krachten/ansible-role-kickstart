@@ -33,15 +33,15 @@
   server_type: cx22
   image: debian-10
 - name: debian11
-  ci: true
+  ci: false
   server_type: cx22
   image: debian-11
 - name: debian12
-  ci: true
+  ci: false
   server_type: cx22
   image: debian-12
 - name: debian13
-  ci: true
+  ci: false
   server_type: cx22
   image: debian-13
 - name: ubuntu1804
@@ -53,11 +53,11 @@
   server_type: cx22
   image: ubuntu-20.04
 - name: ubuntu2204
-  ci: true
+  ci: false
   server_type: cx22
   image: ubuntu-22.04
 - name: ubuntu2404
-  ci: true
+  ci: false
   server_type: cx22
   image: ubuntu-24.04
 - name: fedora37
@@ -77,10 +77,14 @@
   server_type: cx22
   image: fedora-40
 - name: fedora41
-  ci: true
+  ci: false
   server_type: cx22
   image: fedora-41
 - name: fedora42
-  ci: true
+  ci: false
   server_type: cx22
   image: fedora-42
+- name: fedora43
+  ci: false
+  server_type: cx22
+  image: fedora-43

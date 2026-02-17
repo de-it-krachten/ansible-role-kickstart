@@ -32,17 +32,10 @@ Supported platforms
 - AlmaLinux 8
 - AlmaLinux 9
 - AlmaLinux 10
-- SUSE Linux Enterprise 15<sup>1</sup>
-- Debian 11 (Bullseye)
-- Debian 12 (Bookworm)
-- Debian 13 (Trixie)
-- Ubuntu 22.04 LTS
-- Ubuntu 24.04 LTS
-- Fedora 41
-- Fedora 42
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
+
 
 ## Role Variables
 ### defaults/main.yml
@@ -63,6 +56,9 @@ kickstart_path: /tmp
 
 # kickstart virtualenv
 kickstart_venv_root: /usr/local/venv/pykickstart
+
+# setup venv as root
+kickstart_venv_become: true
 
 # List of OS packages for creating & validating kickstart files/images
 kickstart_os_packages:
@@ -87,6 +83,7 @@ kickstart_template_version: RHEL{{ kickstart_version }}
 
 # Lookup dict for sources
 kickstart_sources:
+  # 'rhel9': {}
   'centos8':
     baseos: https://vault.centos.org/centos/8/BaseOS/x86_64/os
     appstream: https://vault.centos.org/centos/8/AppStream/x86_64/os
