@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/de-it-krachten/ansible-role-kickstart/compare/v1.3.0...v1.4.0) (2026-03-06)
+
+
+### Features
+
+* Add support for RHEL 9/10 ([1d63880](https://github.com/de-it-krachten/ansible-role-kickstart/commit/1d63880fb2991cf1d8ac110df1009ef35d80a298))
+
 # [1.3.0](https://github.com/de-it-krachten/ansible-role-kickstart/compare/v1.2.0...v1.3.0) (2025-08-09)
 
 
