@@ -45,7 +45,7 @@ skipx
 services --disabled="chronyd"
 
 # System timezone
-timezone Europe/Amsterdam --utc
+timezone {{ kickstart_timezone }} --utc
 timesource --ntp-server=pool.ntp.org
 
 
