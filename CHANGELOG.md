@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/de-it-krachten/ansible-role-kickstart/compare/v1.4.0...v1.5.0) (2026-07-26)
+
+
+### Bug Fixes
+
+* Update templates for RHEL9/10 ([b4b567c](https://github.com/de-it-krachten/ansible-role-kickstart/commit/b4b567c9010c787aa1eda806b55c390fc1fe27f8))
+
+
+### Features
+
+* Add support for ansible-core 2.20+ ([a781fbc](https://github.com/de-it-krachten/ansible-role-kickstart/commit/a781fbc8a8b04feb0501421eb9bf76070c6e1a90))
+
 # [1.4.0](https://github.com/de-it-krachten/ansible-role-kickstart/compare/v1.3.0...v1.4.0) (2026-03-06)
 
 
