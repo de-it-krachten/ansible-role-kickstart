@@ -43,7 +43,7 @@
     cmd: "{{ kickstart_venv_root }}/bin/ksvalidator -v {{ kickstart_template_version }} {{ mountpoint }}/ks.cfg"
   changed_when: false
   environment:
-    PATH: /usr/local/bin:{{ ansible_env.PATH }}
+    PATH: /usr/local/bin:{{ ansible_facts.env.PATH }}
   when: kickstart_validator | bool
 
 - name: Unmount the image

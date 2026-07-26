@@ -34,7 +34,7 @@
   ansible.builtin.command:
     cmd: "{{ kickstart_venv_root }}/bin/ksvalidator -v {{ kickstart_template_version }} {{ mountpoint }}/ks.cfg"
   environment:
-    PATH: /usr/local/bin:{{ ansible_env.PATH }}
+    PATH: /usr/local/bin:{{ ansible_facts.env.PATH }}
   changed_when: false
   when: kickstart_validator | bool
 
