@@ -11,9 +11,6 @@ generic:
 
 # Supported platforms
 platforms:
-  debian11:
-    supported: false
-    ci: false
   debian12:
     supported: false
     ci: false
